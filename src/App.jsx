@@ -1,63 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import "./App.css";
+import "tailwindcss";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const courses = [
+    {
+      title: "System Administration and IT Infrastructure Services",
+    },
+    {
+      title: "Operating Systems Becoming a Power User",
+    },
+    {
+      title: "The Bits and Bytes of Computer Networking",
+    },
+    {
+      title: "Technical Support Fundamentals",
+    },
+    {
+      title: "How to Succeed at: Writing Applications",
+    },
+    {
+      title: "Medicine Administration for Carers",
+    },
+  ];
 
   return (
     <>
-      {/* div yang digunakan sebagai parent */}
-      <div className="min-h-screen bg-neutral-800 
-      flex flex-col items-center justify-center text-center space-x-8 mb-12">
-        
-        {/* isi dari tampilan */}
-          <div className="flex items-center justify-center">
+      <div className="p-6 grid grid-cols-4 gap-6 
+      bg-linear-to-br/srgb from-blue-600 to-purple-700">
+        {courses.map((course, index) => (
+          <div key={index} className="shadow rounded-lg overflow-hidden flex flex-col
+          hover:border border-gray-500
+          hover:shadow-lg hover:scale-105 bg- transition-transform duration-300
+          ">
+            {/* Image */}
+            <img
+              src="https://www.placehold.co/300x200"
+              alt={course.title}
+              className="w-full h-80 object-cover"
+            />
 
-            <a href="https://vite.dev" target="_blank">
-              <img 
-              src={viteLogo} 
-              className="w-24 h-24 animate-pulse" 
-              alt="Vite logo" 
-              style={{animationDuration: "2s"}}
-              />
-            </a>
+            {/* Content */}
+            <div className="p-4 bg-red-100 flex flex-col justify-between h-full">
+              <h3 className="text-lg font-semibold mb-4">{course.title}</h3>
 
-            <a href="https://react.dev" target="_blank">
-              <img 
-              src={reactLogo} 
-              className="w-24 h-24 animate-pulse" 
-              alt="React logo" 
-              style={{animationDuration: "2s"}}/>
-            </a>
+              	<div className="bg-red-50 p-2 rounded-lg">
+                <div className="text-sm text-gray-500 mt-2 flex justify-between">
+                  <span>👥 123 users</span>
+                  <span>⏱ 60 min</span>
+                </div>
 
-          </div>
+                {/* Author */}
+                <div className="mt-3 mb-2 gap-2 flex items-center">
+                  <img
+                    src="https://www.placehold.co/50x50"
+                    alt="Author's Avatar"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-medium">Author s Name</p>
+                    <p className="text-xs text-gray-500">Designer</p>
+                  </div>
+                </div>
+              </div>
 
-        <h1 className="text-white text-4xl font-bold mb-16"> Vite + React</h1>
-
-          <div>
-            <div 
-            className="text-sm space-y-6 mb-8 animate-pulse"
-            style={{}}>
-              <button onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-              </button>
-
-              <p className="text-neutral-400">
-                Edit <code>src/App.jsx</code> and save to test HMR
-              </p>
-
+              {/* Footer */}
+              <div className="mt-4 flex items-center justify-between">
+                <div className="bg-white py-2 px-4 rounded">$123</div>
+                <button className="bg-blue-300 hover:bg-blue-700 active:bg-green-600
+                text-white px-4 py-2 rounded text-sm">
+                  Get Started
+                </button>
+              </div>
             </div>
-
-            <p className="text-neutral-500 animate-pulse">
-              Click on the Vite and React logos to learn more
-            </p>
           </div>
-
+        ))}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
