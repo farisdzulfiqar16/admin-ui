@@ -16,8 +16,8 @@ function UserCard(props) {
 
     return (
         <>
-        <div className="bg-white p-6 rounded-lg shadow 
-        hover:shadow-md transition-shadow">
+        <div className="bg-white p-6 rounded-lg shadow
+        hover:shadow-md transition-shadow hover:bg-red-200 hover:border transition-border">
             <h2 className="text-xl font-semibold text-[#2D2D2D] mb-2">{name}</h2>
                 {/* Menampilkan data */}
                 <p className="text-black">
@@ -38,7 +38,7 @@ function UserCard(props) {
                 <div>
                     <button 
                         className={`${clicked ? "bg-special-red2" : "bg-gray-01" } 
-                        text-white p-2 rounded-md hover:bg-special-red mt-5`}
+                        text-white p-2 rounded-md hover:bg-special-red mt-5 w-sm`}
                         onClick={() => setClicked(true)}
                     >
                         {clicked ? "Tombol sudah diklik" : "Silakan Klik"}
