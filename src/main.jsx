@@ -5,9 +5,11 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import Exercise from './Exercise.jsx'
+import PostCard from './PostCard.jsx'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Exercise/>
+    <PostCard/>
   </StrictMode>,
 )

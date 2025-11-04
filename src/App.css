@@ -26,4 +26,8 @@ html {
   --color-special-mainBg: #233D4D;
   --color-special-green: #4daf6e;
   --color-special-red: #e73d1c;
+  /* Tambahkan item baru pada Design Token yaitu 
+  warna dengan Hex Code #b83016, yang diberi nama Special Red2. */
+  --color-special-red2: #b83016;
+  
 }
