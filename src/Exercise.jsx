@@ -2,6 +2,7 @@
     import React, { useEffect, useState } from "react";
     import UserCard from "./UserCard";
     import { getUsers } from "./Services";
+    import postcard from "./PostCard";
 
     function Exercise() {
       const [users , setUsers] = useState([]);
@@ -34,5 +35,5 @@
       );
     }
     
-    export default Exercise
+    export default Exercise;
     
