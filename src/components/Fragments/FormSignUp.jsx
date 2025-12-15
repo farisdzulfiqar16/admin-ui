@@ -11,6 +11,16 @@ function FormSignIn() {
             <form action="">
                 <div className="mb-6">
                     <LabeledInput
+                      label="Name"
+                      id="Name"
+                      type="Name"
+                      placeholder="Alexander"
+                      name="Name"
+                    />
+                </div>
+
+                <div className="mb-6">
+                    <LabeledInput
                       label="Email Address"
                       id="email"
                       type="email"
@@ -82,7 +92,7 @@ function FormSignIn() {
         {/* link start */}
           <div className="flex justify-center">
             <link to="/login" className="text-primary font-bold">
-              Create an account
+              Sign In Here
             </link>
           </div>
         {/* link end */}

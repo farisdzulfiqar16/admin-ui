@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 function Button(props) {
 	const { children, type = "submit", variant = "primary" } = props;

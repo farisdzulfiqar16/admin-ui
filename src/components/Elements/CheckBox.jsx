@@ -10,7 +10,7 @@ function LabeledInput(props) {
         {...rest}
       />
       <label 
-        className="text-sm text-gray-01 ml-2"
+        className="text-sm text-gray-01 ml-6"
         htmlFor={id} 
       >
         {label}
