@@ -2,6 +2,7 @@ import React from "react";
 import LabeledInput from "../Elements/LabeledInput";
 import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
+import { Link } from "react-router-dom";
 
 function FormSignIn() {
   return (
@@ -81,13 +82,13 @@ function FormSignIn() {
 
         {/* link start */}
           <div className="flex justify-center">
-            <link to="/login" className="text-primary font-bold">
+            <Link to="/login" className="text-primary font-bold">
               Create an account
-            </link>
+            </Link>
           </div>
         {/* link end */}
     </>
   )
 }
 
-export default FormSignIn
+export default FormSignIn;

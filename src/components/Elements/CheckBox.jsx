@@ -1,6 +1,6 @@
 import React from "react";
 
-function LabeledInput(props) {
+function CheckBox(props) {
   const {label , id , ...rest} = props;
   return (
     <>
