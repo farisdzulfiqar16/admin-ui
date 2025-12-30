@@ -14,7 +14,7 @@ function CheckBox(props) {
           <label 
             htmlFor={id} 
             className="text-sm text-gray-01 ml-6"
-          >
+          > keep me signed in
             {label}
           </label>
         </div>

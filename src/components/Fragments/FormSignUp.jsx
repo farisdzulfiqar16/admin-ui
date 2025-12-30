@@ -41,9 +41,11 @@ function FormSignUp() {
                 </div>
 
                 <div className="mb-6">
-                    <CheckBox></CheckBox>
+                    <CheckBox />
                 </div>
-                <button/>
+                <Button type="submit" className="w-full bg-primary text-white py-3 rounded-lg font-bold">
+                  Sign In
+                </Button>
                 {/* button login  */}
             </form>
           </div>

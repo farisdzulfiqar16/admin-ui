@@ -3,8 +3,13 @@ import LabeledInput from "../Elements/LabeledInput";
 import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function FormSignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  console.log(email + password); 
   return (
     <>
         {/* form start */}
@@ -17,6 +22,8 @@ function FormSignIn() {
                       type="email"
                       placeholder="hello@example.com"
                       name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 
@@ -27,13 +34,17 @@ function FormSignIn() {
                       type="Password"
                       placeholder="****************"
                       name="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
 
                 <div className="mb-6">
-                    <CheckBox></CheckBox>
+                    <CheckBox />
                 </div>
-                <button/>
+                <Button type="submit" className="w-full bg-primary text-white py-3 rounded-lg font-bold">
+                  Sign In
+                </Button>
                 {/* button login  */}
             </form>
           </div>
