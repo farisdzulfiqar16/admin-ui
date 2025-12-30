@@ -1,10 +1,10 @@
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { ThemeContext } from "../../context/themeContext";  
 import React , {useContext , useState}  from "react"; 
+import { NavLink } from "react-router-dom";
+import Input from "../Elements/Input";
 import Logo from "../Elements/Logo";
 import Icon from "../Elements/icon";
-import Input from "../Elements/Input";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { NavLink } from "react-router-dom";
-import { ThemeContext } from "../../context/themeContext";  
 
 
 function MainLayout(props) {
