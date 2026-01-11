@@ -4,8 +4,8 @@ function Logo(props) {
   const { variant = "primary" } = props;
 
   const variantClasses = {
-    primary: "text-primary text-4xl",
-    secondary: "text-primary text-sm sm:text-2xl",
+    primary: "text-primary text-4xl sm:text-5xl ",
+    secondary: "text-primary text-sm sm:text-2xl ",
   };
 
   return (
@@ -18,6 +18,7 @@ function Logo(props) {
         bank
         <span className="font-bold">.IO</span>
       </div>
+      
     </>
   );
 }

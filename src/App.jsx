@@ -33,8 +33,6 @@ function App() {
     return user ? <Navigate to="/" /> : children;
   };
 
-
-
     const myRouter = createBrowserRouter([
     {
       path: "/",

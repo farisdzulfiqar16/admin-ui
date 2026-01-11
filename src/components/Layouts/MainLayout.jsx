@@ -6,9 +6,15 @@ import Input from "../Elements/input";
 import Logo from "../Elements/Logo";
 import Icon from "../Elements/icon";
 import { AuthContext } from "../../context/authContext";  
+import { logoutService } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
+
 
 function MainLayout(props) {
   const { children } = props;
+  const [showSidebar, setShowSidebar] = useState(false);
+  const navigate = useNavigate();
+
   
   const themes = [
     { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
@@ -31,26 +37,42 @@ function MainLayout(props) {
     ];
 
   const { user , logout } = useContext(AuthContext);
+  
   // logout function
+  // const handleLogout = async () => {
+  //   try {
+  //     await logoutService();
+  //     logout(); 
+  //   } catch (err) {
+  //     console.error(err);
+  //     if (err.status === 401) {
+  //       logout();
+  //     }
+  //   }
+  // };
+
+  // updated logout function with navigation
   const handleLogout = async () => {
     try {
       await logoutService();
-      logout(); 
+      logout();
+      navigate("/login"); // ⬅️ WAJIB
     } catch (err) {
       console.error(err);
-      if (err.status === 401) {
-        logout();
-      }
+      logout();
+      navigate("/login"); // ⬅️ fallback aman
     }
   };
 
   return (
     <>
-	    <div className={`flex min-h-screen ${theme.name}`}>
+	    <div className={`flex min-h-screen ${theme.name} min-w-[1024px]`}>
         <aside 
-          className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
-          flex flex-col justify-between px-7 py-12
-          ">
+          className={`${
+            showSidebar ? "flex" : "hidden"
+          } md:flex bg-defaultBlack w-28 sm:w-64 text-special-bg2
+          flex-col justify-between px-7 py-12
+          `}>
             <div>
               {/* logo */}
                 <div className="mb-10">
@@ -110,7 +132,7 @@ function MainLayout(props) {
               <div className="flex justify-between items-center">
                 <div>Avatar</div>
                   <div className="hidden sm:block">
-                    {user?.username}
+                    {user?.name}
                     <br />
                     View Profile
                   </div>
@@ -124,24 +146,38 @@ function MainLayout(props) {
 
         <div className="bg-special-mainBg flex flex-col flex-1">
           <header className="border border-b bg-gray-05 px-6 py-7 flex justify-between items-center">
-            
+            {/* kiri */}
             <div className="flex items-center">
-              <div className="font-bold text-2xl me-6">{user?.username}</div> 
-                <div className="text-gray-03 flex">
-                  <Icon.ChevronRight size={20}/>
-                  <span>May 19, 2023</span>
-                </div> 
+              
+              {/* tombol sidebar (mobile only) */}
+              <button
+                className="md:hidden text-primary me-4 text-2xl font-bold"
+                onClick={() => setShowSidebar(!showSidebar)}
+              >
+                ☰
+              </button>
+
+              <div className="font-bold text-2xl me-6">
+                {user?.name}
+              </div>
+
+              <div className="text-gray-03 flex">
+                <Icon.ChevronRight size={20} />
+                <span>May 19, 2023</span>
+              </div>
             </div>
 
+            {/* kanan */}
             <div className="flex items-center">
               <div className="me-10">
-                <NotificationsIcon className="text-primary scale-110"/>
-              </div> 
+                <NotificationsIcon className="text-primary scale-110" />
+              </div>
 
-              <Input backgroundColor="bg-white" border="border-white" ></Input>
+              <Input backgroundColor="bg-white" border="border-white" />
             </div>
 
           </header>
+
 
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
