@@ -1,4 +1,4 @@
-import React ,{ useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MainLayout from "../components/Layouts/MainLayout";
 import CardGoal from "../components/Fragments/CardGoal";
 import CardBalance from "../components/Fragments/CardBalance";
@@ -7,12 +7,12 @@ import CardUpcomingBill from "../components/Fragments/CardUpcomingBill";
 import CardExpenseBreakdown from "../components/Fragments/CardExpenseBreakdown";
 import CardRecentTransaction from "../components/Fragments/CardRecentTransaction";
 import AppSnackbar from "../components/Elements/AppSnackbar";
-import { 
-  transactions, 
-  bills, 
-  balances, 
+import {
+  transactions,
+  bills,
+  balances,
   expensesBreakdowns,
-  expensesStatistics
+  expensesStatistics,
 } from "../data";
 import { AuthContext } from "../context/authContext";
 
@@ -20,42 +20,53 @@ function Dashboard() {
   // const [goals, setGoals] = useState([]);
   const { logout } = useContext(AuthContext);
   const [goals, setGoals] = useState([]);
+  const [loadingGoals, setLoadingGoals] = useState(true); // ⬅️ tambahkan loading
+  const goalData = goals.length > 0 ? goals[0] : {};
 
   // state untuk snackbar
-  const[snackbar, setSnackbar] = useState({
+  const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success",
   });
 
-  
   // const handleCloseSnackbar = () => {
   //   setSnackbar((prev) => ({ ...prev, open: false }));
   // }
+
   // fungsi untuk menutup snackbar
   const handleCloseSnackbar = (_, reason) => {
     if (reason === "clickaway") return;
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
+  // fungsi untuk fetch data goals
   const fetchGoals = async () => {
-    // gunakan goalService untuk fetch data goals
+    setLoadingGoals(true); // ⬅️ tampilkan loading
     try {
-      const data = await goalService();
-      setGoals(data);
+      const result = await goalService();
+
+      if (Array.isArray(result)) {
+        setGoals(result);
+      } else if (result) {
+        setGoals([result]);
+      } else {
+        setGoals([]);
+      }
     } catch (err) {
-      // tampilkan snackbar error
       setSnackbar({
-        open: false,
+        open: true,
         message: err.msg || "Gagal memuat data goals",
         severity: "error",
       });
-      // logout jika error 401 unauthorized
-      if (err.status === 401) {
-        logout();
-      }
+
+      if (err.status === 401) logout();
+      setGoals([]);
+    } finally {
+      setLoadingGoals(false); // ⬅️ sembunyikan loading
     }
   };
+
   // fungsi untuk fetch data goals
   useEffect(() => {
     fetchGoals();
@@ -64,7 +75,6 @@ function Dashboard() {
   return (
     <MainLayout>
       <div className="grid sm:grid-cols-12 gap-6">
-
         {/* Balance */}
         <div className="sm:col-span-4">
           <CardBalance data={balances} />
@@ -72,7 +82,10 @@ function Dashboard() {
 
         {/* Goals */}
         <div className="sm:col-span-4">
-          <CardGoal data={goals} />
+          <CardGoal
+            data={goals[0] || { present_Amount: 0, target_Amount: 0 }}
+            loading={goals.length === 0}
+          />
         </div>
 
         {/* Upcoming Bills */}

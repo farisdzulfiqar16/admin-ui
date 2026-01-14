@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Logo(props) {
   const { variant = "primary" } = props;
 
@@ -10,15 +10,16 @@ function Logo(props) {
 
   return (
     <>
-      <div
-        className={`flex justify-center font-poppins tracking-wide 
+      <Link to="/">
+        <div
+          className={`flex justify-center font-poppins tracking-wide 
           ${variantClasses[variant] || variantClasses.primary}`}
-      >
-        <span className="font-bold">FINE</span>
-        bank
-        <span className="font-bold">.IO</span>
-      </div>
-      
+        >
+          <span className="font-bold">FINE</span>
+          bank
+          <span className="font-bold">.IO</span>
+        </div>
+      </Link>
     </>
   );
 }

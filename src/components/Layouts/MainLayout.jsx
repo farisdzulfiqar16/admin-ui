@@ -1,21 +1,21 @@
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { ThemeContext } from "../../context/themeContext";  
-import React , {useContext , useState}  from "react"; 
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { ThemeContext } from "../../context/themeContext";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Input from "../Elements/input";
 import Logo from "../Elements/Logo";
 import Icon from "../Elements/icon";
-import { AuthContext } from "../../context/authContext";  
+import { AuthContext } from "../../context/authContext";
 import { logoutService } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
-
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function MainLayout(props) {
   const { children } = props;
   const [showSidebar, setShowSidebar] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  
   const themes = [
     { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
     { name: "theme-blue", bgcolor: "bg-[#1E90FF]", color: "#1E90FF" },
@@ -24,25 +24,30 @@ function MainLayout(props) {
     { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
   ];
 
-  const {theme, setTheme} = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const menu = [
-      { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
-      { id: 2, name: "Balances", icon: <Icon.Balance />, link: "/balance" },
-      { id: 3, name: "Transaction", icon: <Icon.Transaction />, link: "/transaction", },
-      { id: 4, name: "Bills", icon: <Icon.Bill />, link: "/bill" },
-      { id: 5, name: "Expenses", icon: <Icon.Expense />, link: "/expense" },
-      { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
-      { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
-    ];
+    { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
+    { id: 2, name: "Balances", icon: <Icon.Balance />, link: "/balance" },
+    {
+      id: 3,
+      name: "Transaction",
+      icon: <Icon.Transaction />,
+      link: "/transaction",
+    },
+    { id: 4, name: "Bills", icon: <Icon.Bill />, link: "/bill" },
+    { id: 5, name: "Expenses", icon: <Icon.Expense />, link: "/expense" },
+    { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
+    { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
+  ];
 
-  const { user , logout } = useContext(AuthContext);
-  
+  const { user, logout } = useContext(AuthContext);
+
   // logout function
   // const handleLogout = async () => {
   //   try {
   //     await logoutService();
-  //     logout(); 
+  //     logout();
   //   } catch (err) {
   //     console.error(err);
   //     if (err.status === 401) {
@@ -53,102 +58,105 @@ function MainLayout(props) {
 
   // updated logout function with navigation
   const handleLogout = async () => {
+    setLoading(true); // tampilkan Backdrop
     try {
+      await new Promise((res) => setTimeout(res, 300)); // delay 300ms supaya loading terlihat
       await logoutService();
       logout();
-      navigate("/login"); // ⬅️ WAJIB
+      navigate("/login");
     } catch (err) {
       console.error(err);
       logout();
-      navigate("/login"); // ⬅️ fallback aman
+      navigate("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-	    <div className={`flex min-h-screen ${theme.name} min-w-[1024px]`}>
-        <aside 
+      <div className={`flex min-h-screen ${theme.name} min-w-[1024px]`}>
+        <aside
           className={`${
             showSidebar ? "flex" : "hidden"
           } md:flex bg-defaultBlack w-28 sm:w-64 text-special-bg2
           flex-col justify-between px-7 py-12
-          `}>
-            <div>
-              {/* logo */}
-                <div className="mb-10">
-                  <Logo variant="secondary"/>
-                </div>
-              
-              {/* navbar */}
-              <nav>
-                {menu.map((item) => (
-                  <NavLink
-                    key={item.id}
-                    to={item.link}
-                    className={({ isActive }) =>
-                      `flex px-4 py-3 rounded-md hover:text-white hover:font-bold hover:scale-105 ${
-                        isActive
-                          ? "bg-primary text-white font-bold"
-                          : "hover:bg-special-bg3"
-                      }`
-                    }
-                  >
-                    <div className="mx-auto sm:mx-0">{item.icon}</div>
-                    <div className="ms-3 hidden sm:block">{item.name}</div>
-                  </NavLink>
-                ))}
-              </nav>
+          `}
+        >
+          <div>
+            {/* logo */}
+            <div className="mb-10">
+              <Logo variant="secondary" />
             </div>
 
-            {/*  tema  */}
-            <div>
-              Themes
-              <div className="flex flex-col sm:flex-row gap-2 items-center">
-                {themes.map((t) => (
-                  <div
-                    key={t.name}
-                    className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer mb-2`}
-                    onClick={() => setTheme(t)}
-                  ></div>
-                ))}
+            {/* navbar */}
+            <nav>
+              {menu.map((item) => (
+                <NavLink
+                  key={item.id}
+                  to={item.link}
+                  className={({ isActive }) =>
+                    `flex px-4 py-3 rounded-md hover:text-white hover:font-bold hover:scale-105 ${
+                      isActive
+                        ? "bg-primary text-white font-bold"
+                        : "hover:bg-special-bg3"
+                    }`
+                  }
+                >
+                  <div className="mx-auto sm:mx-0">{item.icon}</div>
+                  <div className="ms-3 hidden sm:block">{item.name}</div>
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+
+          {/*  tema  */}
+          <div>
+            Themes
+            <div className="flex flex-col sm:flex-row gap-2 items-center">
+              {themes.map((t) => (
+                <div
+                  key={t.name}
+                  className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer mb-2`}
+                  onClick={() => setTheme(t)}
+                ></div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            {/* logout */}
+            <div onClick={handleLogout} className="cursor-pointer">
+              <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
+                <div className="mx-auto sm:mx-0 text-primary">
+                  <Icon.Logout />
+                </div>
+                <div className="ms-3 hidden sm:block">Logout</div>
               </div>
             </div>
 
-            <div>
-              {/* logout */}
-              <div onClick={handleLogout} className="cursor-pointer">
-              	<div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
-                  <div className="mx-auto sm:mx-0 text-primary">
-                    <Icon.Logout/>
-                  </div>
-                  <div className="ms-3 hidden sm:block">Logout</div>
-                </div>
-              </div>
-              
-              {/* pemisah */}
-              <div className="border my-10 border-b-special-bg"></div>
+            {/* pemisah */}
+            <div className="border my-10 border-b-special-bg"></div>
 
-              {/* user */}
-              <div className="flex justify-between items-center">
-                <div>Avatar</div>
-                  <div className="hidden sm:block">
-                    {user?.name}
-                    <br />
-                    View Profile
-                  </div>
-                <div className="hidden sm:block">
-                  <Icon.Detail size={15}/>
-                </div>
+            {/* user */}
+            <div className="flex justify-between items-center">
+              <div>Avatar</div>
+              <div className="hidden sm:block">
+                {user?.name}
+                <br />
+                View Profile
+              </div>
+              <div className="hidden sm:block">
+                <Icon.Detail size={15} />
               </div>
             </div>
-
-          </aside>
+          </div>
+        </aside>
 
         <div className="bg-special-mainBg flex flex-col flex-1">
           <header className="border border-b bg-gray-05 px-6 py-7 flex justify-between items-center">
             {/* kiri */}
             <div className="flex items-center">
-              
               {/* tombol sidebar (mobile only) */}
               <button
                 className="md:hidden text-primary me-4 text-2xl font-bold"
@@ -157,9 +165,7 @@ function MainLayout(props) {
                 ☰
               </button>
 
-              <div className="font-bold text-2xl me-6">
-                {user?.name}
-              </div>
+              <div className="font-bold text-2xl me-6">{user?.name}</div>
 
               <div className="text-gray-03 flex">
                 <Icon.ChevronRight size={20} />
@@ -175,13 +181,31 @@ function MainLayout(props) {
 
               <Input backgroundColor="bg-white" border="border-white" />
             </div>
-
           </header>
-
 
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
-		  </div>
+      </div>
+
+      {/* BACKDROP LOADING */}
+      <Backdrop
+        open={loading}
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          transition: "opacity 0.3s ease",
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }

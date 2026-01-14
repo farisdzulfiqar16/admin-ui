@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import LabeledInput from "../Elements/LabeledInput";
 import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+/* VALIDATION SCHEMA */
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Email tidak valid").required("Email wajib diisi"),
   password: Yup.string().required("Password wajib diisi"),
@@ -15,6 +15,7 @@ const SignInSchema = Yup.object().shape({
 function FormSignIn({ onSubmit }) {
   return (
     <>
+      {/* form start */}
       <Formik
         initialValues={{
           email: "",
@@ -62,7 +63,7 @@ function FormSignIn({ onSubmit }) {
                     id="password"
                     type="password"
                     label="Password"
-                    placeholder="●●●●●●●●●●●●●●"
+                    placeholder="**********"
                   />
                 )}
               </Field>
@@ -89,10 +90,13 @@ function FormSignIn({ onSubmit }) {
               </Field>
             </div>
             {/* BUTTON */}
-            <Button>{isSubmitting ? "Loading..." : "Login"}</Button>
+            <Button>
+              {isSubmitting ? "Loading..." : "Login"}
+            </Button>
           </Form>
         )}
       </Formik>
+      {/* form end */}
 
       {/* teks start */}
       <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
@@ -139,7 +143,7 @@ function FormSignIn({ onSubmit }) {
 
       {/* link start */}
       <div className="flex justify-center">
-        <Link to="/login" className="text-primary font-bold">
+        <Link to="/register" className="text-primary font-bold">
           Create an account
         </Link>
       </div>

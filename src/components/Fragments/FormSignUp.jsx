@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState  } from "react";
 import LabeledInput from "../Elements/LabeledInput";
 import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
@@ -11,10 +11,24 @@ const SignUpSchema = Yup.object().shape({
   name: Yup.string().min(3, "Minimal 3 karakter").required("Nama wajib diisi"),
   email: Yup.string().email("Email tidak valid").required("Email wajib diisi"),
   password: Yup.string()
-    .min(8, "Password minimal 8 karakter")
+    .min(6, "Password minimal 6 karakter")
     .required("Password wajib diisi"),
   terms: Yup.boolean().oneOf([true], "Harus menyetujui syarat & ketentuan"),
 });
+
+
+
+const handleSignUp = async (values) => {
+  // simulasi proses signup
+  console.log("Signup data:", values);
+
+  // indikator berhasil (untuk ujian)
+  alert("Akun berhasil dibuat!");
+
+  // redirect ke login
+  navigate("/login");
+};
+
 
 function FormSignUp({ onSubmit }) {
   return (
@@ -86,7 +100,7 @@ function FormSignUp({ onSubmit }) {
                     id="password"
                     type="password"
                     label="Password"
-                    placeholder="●●●●●●●●"
+                    placeholder="**********"
                   />
                 )}
               </Field>
@@ -105,20 +119,15 @@ function FormSignUp({ onSubmit }) {
                     {...field}
                     id="terms"
                     checked={field.value}
-                    label="I agree to the Terms & Conditions"
+                    label="Keep me signed in"
                   />
                 )}
               </Field>
-              <ErrorMessage
-                name="terms"
-                component="p"
-                className="text-red-500 text-xs mt-1"
-              />
             </div>
 
             {/* BUTTON */}
             <Button type="submit">
-              {isSubmitting ? "Creating account..." : "Create Account"}
+              {isSubmitting ? "Loading..." : "Create Account"}
             </Button>
           </Form>
         )}

@@ -7,11 +7,10 @@ import {
 import * as React from "react";
 import { ThemeContext } from "../../context/themeContext";
 
-
-function GaugePointer( props) {
+function GaugePointer(props) {
   const { color } = props;
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
-    
+
   if (valueAngle === null) {
     // No value to display
     return null;
@@ -35,7 +34,7 @@ function GaugePointer( props) {
 
 export default function CompositionExample(props) {
   const { data } = props;
-  const { theme } = React.useContext(ThemeContext) ;
+  const { theme } = React.useContext(ThemeContext);
 
   return (
     <GaugeContainer
@@ -43,7 +42,9 @@ export default function CompositionExample(props) {
       height={80}
       startAngle={-90}
       endAngle={90}
-      value={data}
+      value={Number.isFinite(data) ? data : 0}
+      min={0}
+      max={100}
       sx={() => ({
         [`& .value-arc`]: {
           fill: "#299D91",

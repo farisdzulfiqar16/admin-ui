@@ -1,65 +1,67 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import Card from "../Elements/Card";
+import Icon from "../Elements/icon";
 
-function CardRecentTransaction(props) {
-  const { data } = props;
+function CardRecentTransaction({ data }) {
   const tabs = ["All", "Revenue", "Expense"];
-  // membuat state untuk tab yang aktif
-  const [active, setActive] = useState("All");
+  const [activeTab, setActiveTab] = useState("All");
 
+  // Filter data sesuai tab
   const filteredData =
-    active === "All" ? data : data.filter((item) => item.type === active);
-  
+    activeTab === "All" ? data : data.filter((item) => item.type === activeTab);
+
   return (
-    <>
-      <Card
-        title="Recent Transactions"
-        link="/transactions"
-        desc={
-          <>
-            <div className="mb-4">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  className={
-                    active == tab
-                      ? "px-4 font-bold text-primary border-b-4 border-primary"
-                      : "px-4 font-bold text-gray-01"
-                  }
-                  onClick={() => setActive(tab)}
-                  value={tab}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            {data.map((item) => (
-              <div key={item.id} className="flex justify-between my-6">
-                <div className="flex">
-                  <div className="bg-special-bg text-gray-02 px-3 rounded-lg flex flex-col place-content-center">
-                    {item.icon}
-                  </div>
-                  <div className="ms-4">
-                    <span className="text-xl font-bold">
-                      {item.transactionName}
-                    </span>
-                    <br />
-                    <span className="text-gray-02">{item.shopName}</span>
-                  </div>
+    <Card
+      title="Recent Transactions"
+      link="/transaction"
+      desc={
+        <>
+          {/* Tabs dengan animasi */}
+          <div className="flex border-b border-gray-05 mb-4 relative">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                className={`relative px-4 py-2 font-bold transition-all duration-300 ${
+                  activeTab === tab
+                    ? "text-primary"
+                    : "text-gray-01 hover:text-gray-02"
+                }`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+                {/* underline animasi */}
+                {activeTab === tab && (
+                  <span className="absolute left-0 bottom-0 w-full h-1 bg-primary rounded-full transition-all duration-300"></span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* List transaksi */}
+          {filteredData.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center my-4 p-2 hover:bg-gray-50 rounded-md transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-special-bg text-gray-02 px-3 rounded-lg flex items-center justify-center">
+                  {item.icon}
                 </div>
-                <div className="text-right">
-                  <span className="text-xl font-bold text-gray-02">
-                    ${item.amount}
-                  </span>
-                  <br />
-                  <span className="text-gray-02">{item.date}</span>
+                <div>
+                  <div className="text-lg font-bold">{item.transactionName}</div>
+                  <div className="text-gray-02 text-sm">{item.shopName}</div>
                 </div>
               </div>
-            ))}
-          </>
-        }
-      />
-    </>
+
+              <div className="text-right">
+                <div className="text-lg font-bold text-gray-02">${item.amount}</div>
+                <div className="text-gray-02 text-sm">{item.date}</div>
+              </div>
+            </div>
+          ))}
+        </>
+      }
+    />
   );
 }
 
