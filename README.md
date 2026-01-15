@@ -145,9 +145,10 @@ Kalau mau tambah dikit biar dosen makin senang, kamu bisa tambahkan:
 
 ---
 ## 📸 Preview Aplikasi
-<img width="1918" height="868" alt="Image" src="https://github.com/user-attachments/assets/efa6a2bf-bf30-4f4d-9d20-735c8f4f9e25" />
-<img width="1917" height="868" alt="Image" src="https://github.com/user-attachments/assets/4bf253ca-cf83-4a01-8e1f-770c3346553b" />
 <img width="1918" height="867" alt="Image" src="https://github.com/user-attachments/assets/a92f4e05-94ec-433d-8261-228424c47d38" />
 <img width="1912" height="876" alt="Image" src="https://github.com/user-attachments/assets/00fb6a5b-1fed-4153-9e55-552913fad8b3" />
+<img width="1918" height="868" alt="Image" src="https://github.com/user-attachments/assets/efa6a2bf-bf30-4f4d-9d20-735c8f4f9e25" />
+<img width="1917" height="868" alt="Image" src="https://github.com/user-attachments/assets/4bf253ca-cf83-4a01-8e1f-770c3346553b" />
+
 
 
